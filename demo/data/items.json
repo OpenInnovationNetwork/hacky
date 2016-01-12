@@ -4,7 +4,7 @@
 		{
 			"groups": [ "photography" ],
 			"date": "2010-09-14",
-			"title": "Baseball",
+			"title": "Baseball-2010-09-14",
 			"img": "baseball.png",
 			"original": "baseball.jpg",
 			"cols": 3
@@ -12,7 +12,7 @@
 		{
 			"groups": [ "wallpaper", "3d" ],
 			"date": "2011-08-14",
-			"title": "Tennis",
+			"title": "Tennis-2011-08-14",
 			"img": "tennis-ball.png",
 			"original": "tennis-ball.jpg",
 			"description": "Shuffle.js is a jQuery plugin for sorting, filtering, and laying out a group of items. It's performant, responsive, and fast. Check out the demos!",
@@ -21,7 +21,7 @@
 		{
 			"groups": [ "wallpaper", "3d" ],
 			"date": "2009-05-27",
-			"title": "iMac",
+			"title": "iMac-2009-05-27",
 			"img": "imac.png",
 			"original": "imac.jpg",
 			"cols": 3
@@ -29,7 +29,7 @@
 		{ 
 			"groups": [ "graphics" ],
 			"date": "2012-05-14",
-			"title": "Master Chief",
+			"title": "Master Chie-2012-05-14f",
 			"img": "master-chief.png",
 			"original": "Master_Chief_Portrait_by_Eightfold_Studios.jpg",
 			"description": "Shuffle.js is a jQuery plugin for sorting, filtering, and laying out a group of items. It's performant, responsive, and fast. Check out the demos!",
@@ -39,7 +39,7 @@
 		{ 
 			"groups": [ "wallpaper", "3d" ],
 			"date": "2009-09-14",
-			"title": "Eightfold",
+			"title": "Eightfold-2009-09-14",
 			"img": "es-blue.png",
 			"original": "es-blue.jpg",
 			"cols": 3
@@ -47,7 +47,7 @@
 		{
 			"groups": [ "photography" ],
 			"date": "2012-03-14",
-			"title": "Pumpkin",
+			"title": "Pumpkin-2012-03-14",
 			"img": "pumpkin.png",
 			"original": "pumpkin.jpg",
 			"description": "Shuffle.js is a jQuery plugin for sorting, filtering, and laying out a group of items. It's performant, responsive, and fast. Check out the demos!",
@@ -56,7 +56,7 @@
 		{ 
 			"groups": [ "wallpaper", "3d" ],
 			"date": "2013-05-19",
-			"title": "Vestride",
+			"title": "Vestride-2013-05-19",
 			"img": "vestride-red.png",
 			"original": "vestride-red.jpg",
 			"extras":  [ "h2" ],
@@ -65,7 +65,7 @@
 		{ 
 			"groups": [ "graphics" ],
 			"date": "2013-02-01",
-			"title": "Newegg",
+			"title": "Newegg-2013-02-01",
 			"img": "newegg.png",
 			"original": "newegg.jpg",
 			"description": "Shuffle.js is a jQuery plugin for sorting, filtering, and laying out a group of items. It's performant, responsive, and fast. Check out the demos!",
@@ -75,7 +75,7 @@
 		{ 
 			"groups": [ "wallpaper" ],
 			"date": "2000-01-01",
-			"title": "Arc",
+			"title": "Arc-2000-01-01",
 			"img": "eightfoldarc.png",
 			"original": "eightfoldarc.jpg",
 			"cols": 3
@@ -83,7 +83,7 @@
 		{ 
 			"groups": [ "photography" ],
 			"date": "2012-07-04",
-			"title": "Ground",
+			"title": "Ground-2012-07-04",
 			"img": "ground.png",
 			"original": "ground!.jpg",
 			"cols": 3
@@ -91,7 +91,7 @@
 		{ 
 			"groups": [ "wallpaper" ],
 			"date": "2011-08-12",
-			"title": "Grass",
+			"title": "Grass-2011-08-12",
 			"img": "grassy-hills.png",
 			"original": "grassy-hills.tif",
 			"description": "Shuffle.js is a jQuery plugin for sorting, filtering, and laying out a group of items. It's performant, responsive, and fast. Check out the demos!",
@@ -100,7 +100,7 @@
 		{ 
 			"groups": [ "wallpaper", "3d" ],
 			"date": "2013-05-19",
-			"title": "Vestride",
+			"title": "Vestride-2013-05-19",
 			"img": "vestride-classy.png",
 			"original": "vestride-classy.jpg",
 			"cols": 3
