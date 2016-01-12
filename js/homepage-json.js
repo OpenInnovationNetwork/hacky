@@ -90,7 +90,7 @@ var DEMO = (function( $ ) {
       
       // Picture
       picture = document.createElement('img');
-      picture.setAttribute('src','/Shuffle/img/'+item.img);
+      picture.setAttribute('src','../img/'+item.img);
       picture.setAttribute('alt','');
       picture.setAttribute('height','145');
       picture.setAttribute('width','230');
@@ -108,7 +108,7 @@ var DEMO = (function( $ ) {
 
           captionLink = document.createElement('a');
           captionLink.setAttribute('target','_blank');
-          captionLink.setAttribute('href', '/Shuffle/img/originals/'+item.original);
+          captionLink.setAttribute('href', '../img/originals/'+item.original);
           captionLink.innerHTML = item.title;
 
           figcaption.appendChild(captionLink);
