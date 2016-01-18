@@ -102,7 +102,7 @@ $(function(){
                   '</div> '+
                   '<br />' +
                   '<div class="row">'+
-                    '<form id="form-rate-project" data-filename="'+json_content.filename+'" class="col s12">' +
+                    '<form class="form-rate-project col s12" data-filename="'+json_content.filename+'">' +
                       '<div class="input-field col s12">'+
                       '  <select>'+
                       '   <option value="" disabled selected></option>'+
