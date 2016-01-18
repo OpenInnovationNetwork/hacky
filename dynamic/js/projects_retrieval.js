@@ -3,15 +3,14 @@ $(function(){
   $( document ).ready(function(){
     //code to call the github api and get the files from the "projects" folder
 
-    path = "projects";
+    path = "dynamic/projects";
     
     projects_count = 0;
     projects_content = new Array();
 
     /* PERSONALIZE THIS CONTENT FOR YOUR FORKED COPY */
-    repository_user = "gscardine"; //eg. in github.com/OpenInnovationNetwork/Projects/, it is "OpenInnovationNetwork"
-    repository_name = "dynamicprojectgallery"; //eg. in github.com/OpenInnovationNetwork/Projects/, it is "Projects"
-
+    repository_user = "OpenInnovationNetwork"; //eg. in github.com/OpenInnovationNetwork/Projects/, it is "OpenInnovationNetwork"
+    repository_name = "hacky"; //eg. in github.com/OpenInnovationNetwork/Projects/, it is "Projects"
 
     // FIND ALL THE FILES INSIDE THE FOLDER
     $.ajax({
@@ -20,8 +19,10 @@ $(function(){
     })
     .success(function(allFiles){
       $.each(allFiles, function (index, value) {
+        var filename = value.name;
+
         // GET CONTENT OF EACH JSON FILE
-        if ((value.type == "file") && (value.name.split('.').pop() == "json")) {
+        if ((value.type == "file") && (filename.split('.').pop() == "json")) {
 
           projects_count++;
           
@@ -35,6 +36,7 @@ $(function(){
             
             try {
               json_content = jQuery.parseJSON(base64decoded);
+              json_content.filename = filename;
 
               // Add to list of contents
               if (json_content.project_name && json_content.project_blurb) {
@@ -98,29 +100,34 @@ $(function(){
         					  project_url +
         					  project_demo_url +
                   '</div> '+
-                  '<div class="row"> <br />'+
-                    '  <div class="input-field col s12">'+
-                    '  <select>'+
-                    '   <option value="" disabled selected></option>'+
-                    '    <option value="1">Gabi</option>'+
-                    '    <option value="2">Dazza</option>'+
-                    '    <option value="3">Dave</option>'+
-                    '    <option value="4">Clarence</option>'+
-                    '  </select>'+
-                    '  <label>Who are you?</label>'+
-                    '</div>'+
-                    '  <div class="input-field col s12">'+
-                    '  <select>'+
-                    '   <option value="" disabled selected></option>'+
-                    '    <option value="1">1</option>'+
-                    '    <option value="2">2</option>'+
-                    '    <option value="3">3</option>'+
-                    '    <option value="4">4</option>'+
-                    '    <option value="5">5</option>'+
-                    '  </select>'+
-                    '  <label>RATE THIS PROJECT</label>'+
-                    '</div>'+
-                    '<a class="waves-effect waves-light btn">RATE</a>'+
+                  '<br />' +
+                  '<div class="row">'+
+                    '<form id="form-rate-project" data-filename="'+json_content.filename+'" class="col s12">' +
+                      '<div class="input-field col s12">'+
+                      '  <select>'+
+                      '   <option value="" disabled selected></option>'+
+                      '    <option value="1">Gabi</option>'+
+                      '    <option value="2">Dazza</option>'+
+                      '    <option value="3">Dave</option>'+
+                      '    <option value="4">Clarence</option>'+
+                      '  </select>'+
+                      '  <label>Who are you?</label>'+
+                      '</div>'+
+                      '<div class="input-field col s12">'+
+                      '  <select class="rate">'+
+                      '   <option value="" disabled selected></option>'+
+                      '    <option value="1">1</option>'+
+                      '    <option value="2">2</option>'+
+                      '    <option value="3">3</option>'+
+                      '    <option value="4">4</option>'+
+                      '    <option value="5">5</option>'+
+                      '  </select>'+
+                      '  <label>RATE THIS PROJECT</label>'+
+                      '</div>'+
+                      '<button class="rate-project waves-effect waves-light btn" type="submit">'+
+                        'RATE'+
+                      '</button>'+
+                    '</form>'+
                   '</div>'+
                 '</div> '+
               '</div> '+
