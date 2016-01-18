@@ -3,21 +3,25 @@ $(function(){
   $( document ).ready(function(){
     //code to call the github api and get the files from the "projects" folder
 
-    path = "dynamic/projects";
+    projects_path = "dynamic/projects";
+    rates_path = "dynamic/projects/rates";
     
     projects_count = 0;
-    projects_content = new Array();
+    projects_content = new Object();
+    rates_content = new Object();
+
 
     /* PERSONALIZE THIS CONTENT FOR YOUR FORKED COPY */
     repository_user = "OpenInnovationNetwork"; //eg. in github.com/OpenInnovationNetwork/Projects/, it is "OpenInnovationNetwork"
     repository_name = "hacky"; //eg. in github.com/OpenInnovationNetwork/Projects/, it is "Projects"
 
-    // FIND ALL THE FILES INSIDE THE FOLDER
+    // FIND ALL THE PROJECT FILES INSIDE THE FOLDER
     $.ajax({
-      url: "https://api.github.com/repos/"+repository_user+"/"+repository_name+"/contents/"+path,
+      url: "https://api.github.com/repos/"+repository_user+"/"+repository_name+"/contents/"+projects_path,
       method: "get"
     })
     .success(function(allFiles){
+
       $.each(allFiles, function (index, value) {
         var filename = value.name;
 
@@ -40,8 +44,50 @@ $(function(){
 
               // Add to list of contents
               if (json_content.project_name && json_content.project_blurb) {
-                projects_content.push(json_content);
+                projects_content[filename] = json_content;
               }
+            } catch (e) {
+              // invalid json
+            }
+          });
+        }
+        
+      });
+    });
+
+    // FIND ALL THE RATE FILES INSIDE THE FOLDER
+    $.ajax({
+      url: "https://api.github.com/repos/"+repository_user+"/"+repository_name+"/contents/"+rates_path,
+      method: "get"
+    })
+    .success(function(allFiles){
+
+      $.each(allFiles, function (index, value) {
+        var filename = value.name;
+
+        // GET CONTENT OF EACH JSON FILE
+        if ((value.type == "file") && (filename.split('.').pop() == "json")) {
+
+          $.ajax({
+            url: "https://api.github.com/repos/"+repository_user+"/"+repository_name+"/contents/"+value.path,
+            method: "get"
+          })
+          .success(function( fileResponse ) {
+            // PARSE CONTENT
+            base64decoded = atob(fileResponse.content);
+            
+            try {
+              json_content = jQuery.parseJSON(base64decoded);
+              project_filename = json_content.project_filename;
+
+              // Create an object for this project
+              if (!(project_filename in rates_content)) {
+                rates_content[project_filename] = { total_rating: 0, individual_rates: []};
+              }
+
+              // Add to list of projects
+              rates_content[project_filename].individual_rates.push(json_content);
+              rates_content[project_filename].total_rating += parseInt(json_content.rate);
             } catch (e) {
               // invalid json
             }
@@ -50,9 +96,12 @@ $(function(){
       });
     });
 
+
+
     // THE CONTENT OF ALL FILES WAS RETRIEVED
     $(document).ajaxStop(function() {
       console.log('All '+ projects_count +' projects retrieved');
+      count = 0;
 
       // Remove preloader image
       $('#projects-list').empty();
@@ -61,7 +110,7 @@ $(function(){
       $.each(projects_content, function (index, json_content) {
         
         template = new Array();
-        if (index % 3 == 0) {
+        if (count % 3 == 2) {
           $('#projects-list').append('<div class="row">');
         }
 
@@ -87,12 +136,27 @@ $(function(){
           project_url = '<p><strong>Project:</strong> <a href="'+json_content.project_url+'">'+json_content.project_url+'</a></p>';
         }
 
+        // RATING
+        avg_rate = Math.round(rates_content[index].total_rating / rates_content[index].individual_rates.length);
+        rating_stars = "";
+        i = 0;
+        for (i = 0; i < avg_rate; i++) {
+          rating_stars += '<i class="material-icons">grade</i>';
+        }
+
         $('#projects-list').append(
             '<div class="col s12 m4 l4"> '+
               '<div class="card blue-grey darken-1"> ' +
                 '<div class="card-content white-text"> ' +
 					        project_thumbnail+
                   '<h4>'+json_content.project_name+'</h4> '+
+
+                  '<div class="chip">'+
+                    rating_stars+
+                    'Rate: '+avg_rate+
+                    '<br />'+
+                  '</div>'+
+
                   '<p>'+json_content.project_blurb+'</p>'+
         				  '<br /><div class="left-align">' +
         					  project_team_name +
@@ -101,21 +165,12 @@ $(function(){
         					  project_demo_url +
                   '</div> '+
                   '<br />' +
+
                   '<div class="row">'+
-                    '<form class="form-rate-project col s12" data-filename="'+json_content.filename+'">' +
-                      '<div class="input-field col s12">'+
-                      '  <select>'+
-                      '   <option value="" disabled selected></option>'+
-                      '    <option value="1">Gabi</option>'+
-                      '    <option value="2">Dazza</option>'+
-                      '    <option value="3">Dave</option>'+
-                      '    <option value="4">Clarence</option>'+
-                      '  </select>'+
-                      '  <label>Who are you?</label>'+
-                      '</div>'+
-                      '<div class="input-field col s12">'+
+                    '<form class="form-rate-project valign-wrapper" data-filename="'+json_content.filename+'">' +
+                      '<div class="input-field col s8 valign">'+
                       '  <select class="rate">'+
-                      '   <option value="" disabled selected></option>'+
+                      '   <option value="" disabled selected>Choose</option>'+
                       '    <option value="1">1</option>'+
                       '    <option value="2">2</option>'+
                       '    <option value="3">3</option>'+
@@ -124,7 +179,7 @@ $(function(){
                       '  </select>'+
                       '  <label>RATE THIS PROJECT</label>'+
                       '</div>'+
-                      '<button class="rate-project waves-effect waves-light btn" type="submit">'+
+                      '<button class="waves-effect waves-light btn col s4 valign" type="submit">'+
                         'RATE'+
                       '</button>'+
                     '</form>'+
@@ -134,13 +189,10 @@ $(function(){
             '</div>'
         );
 
-        if (index % 3 == 2) {
-          $('#projects-list').append('<div class="row">');
-        }
-
       });
 
       $('select').material_select();
+      
     });
 
   });
