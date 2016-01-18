@@ -11,7 +11,7 @@ $(function(){
     e.preventDefault();
 
     project_filename = $(this).data("filename");
-    file_path = "dynamic/projects/rates/rate_" + project_filename;
+    file_path = "dynamic/projects/rates/rate_" + Date.now() + "_" + project_filename;
 
     // Rate data
     var rate_project_data = new Object();
@@ -19,6 +19,7 @@ $(function(){
     rate_project_data.original_repository_user = repository_user;
     rate_project_data.original_repository_name = repository_name;
     rate_project_data.rate = $(this).find("select.rate").val();
+    rate_project_data.timestamp = Date.now();
 
     content_json = JSON.stringify(rate_project_data);
 
